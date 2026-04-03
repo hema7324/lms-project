@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="/static/css/styles.css" />
+  </head>
+  <body>
+    <!-- <header>
+      <h1>Library Management System</h1>
+      <p id="user-greeting" class="hidden">Welcome back!</p>
+    </header> -->
+    <header style="text-align: center; padding: 20px">
+      <h1 style="font-size: 2.5rem">Library Management System</h1>
+      <p id="user-greeting" class="hidden"></p>
+    </header>
+
+    <!-- LOGIN BOx -->
+    <div id="login-view" class="view-container active">
+      <div class="glass-panel auth-form">
+        <h2>Sign In</h2>
+        <form id="login-form">
+          <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="login-username" required />
+          </div>
+          <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="login-password" required />
+          </div>
+          <button type="submit" class="btn">Login</button>
+        </form>
+        <div class="toggle-link" onclick="toggleAuth('signup')">
+          New user? Create an account
+        </div>
+      </div>
+    </div>
+
+    <!-- SIGNUP BOX -->
+    <div id="signup-view" class="view-container">
+      <div class="glass-panel auth-form">
+        <h2>Create Account</h2>
+        <form id="signup-form">
+          <div class="input-group">
+            <label>Full Name</label>
+            <input type="text" id="signup-name" required />
+          </div>
+          <div class="input-group">
+            <label>Username</label>
+            <input type="text" id="signup-username" required />
+          </div>
+          <div class="input-group">
+            <label>Password</label>
+            <input type="password" id="signup-password" required />
+          </div>
+          <div class="input-group">
+            <label>Role</label>
+            <select id="signup-role">
+              <option value="student">Student</option>
+              <option value="faculty">Faculty</option>
+            </select>
+          </div>
+          <button type="submit" class="btn">Sign Up</button>
+        </form>
+        <div class="toggle-link" onclick="toggleAuth('login')">
+          Already have an account? Sign in
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div id="admin-view" class="view-container">
+      <div class="dashboard-header">
+        <h2>System Administration</h2>
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+      </div>
+      <div class="dashboard-grid">
+        <!-- <div class="glass-panel card">
+                <h3>Add New User</h3>
+                <form id="admin-add-user-form" class="input-group">
+                    <input type="text" id="admin-add-username" placeholder="Username" required>
+                    <input type="password" id="admin-add-password" placeholder="Password" required>
+                    <input type="text" id="admin-add-name" placeholder="Full Name" required>
+                    <select id="admin-add-role" style="margin-top:0.4rem; margin-bottom:0.4rem;">
+                        <option value="librarian">Librarian</option>
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <button type="submit" class="btn btn-success">Create User</button>
+                </form>
+            </div> -->
+
+        <!-- <div class="glass-panel card" style="grid-column: 1 / -1; max-width:100%;">
+                <h3>Users</h3>
+                <button class="btn" onclick="fetchUsers()">Refresh List</button>
+                <div style="overflow-x:auto;">
+                <table id="admin-users-table">
+                    <thead><tr><th>ID</th><th>Username</th><th>Role</th><th>Name</th><th>Action</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+                </div>
+            </div> -->
+        <div class="glass-panel card">
+          <h3>System Status</h3>
+          <p>
+            Database: <span class="status-badge status-approved">Online</span>
+          </p>
+          <p>API: <span class="status-badge status-approved">Healthy</span></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LIBRARIAN DASHBOARD -->
+    <div id="librarian-view" class="view-container">
+      <div class="dashboard-header">
+        <h2>Librarian Desk</h2>
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+      </div>
+      <div class="glass-panel" style="text-align: center; margin-bottom: 20px">
+        <h2>Welcome to Digital Library System</h2>
+        <p>Manage books, users and requests efficiently</p>
+      </div>
+      <div class="dashboard-grid">
+        <div class="glass-panel card">
+          <h3>Add New Book</h3>
+          <form id="add-book-form" class="input-group">
+            <input type="text" id="add-title" placeholder="Title" required />
+            <input type="text" id="add-author" placeholder="Author" required />
+            <input type="text" id="add-keywords" placeholder="Keywords" />
+            <input
+              type="number"
+              id="add-copies"
+              placeholder="Copies"
+              required
+            />
+            <button
+              type="submit"
+              class="btn btn-success"
+              style="margin-top: 10px"
+            >
+              Add Book
+            </button>
+          </form>
+        </div>
+        <div class="glass-panel card">
+          <h3>Add New User</h3>
+          <form id="admin-add-user-form" class="input-group">
+            <input
+              type="text"
+              id="admin-add-username"
+              placeholder="Username"
+              required
+            />
+            <input
+              type="password"
+              id="admin-add-password"
+              placeholder="Password"
+              required
+            />
+            <input
+              type="text"
+              id="admin-add-name"
+              placeholder="Full Name"
+              required
+            />
+            <select
+              id="admin-add-role"
+              style="margin-top: 0.4rem; margin-bottom: 0.4rem"
+            >
+              <option value="librarian">Librarian</option>
+              <option value="student">Student</option>
+              <option value="faculty">Faculty</option>
+              <option value="admin">Admin</option>
+            </select>
+            <button type="submit" class="btn btn-success">Create User</button>
+          </form>
+        </div>
+        <div
+          class="glass-panel card"
+          style="grid-column: 1 / -1; max-width: 100%"
+        >
+          <h3>Users</h3>
+          <button class="btn" onclick="fetchUsers()">Refresh List</button>
+          <div style="overflow-x: auto">
+            <table id="admin-users-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Username</th>
+                  <th>Role</th>
+                  <th>Name</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="glass-panel card" style="grid-column: 1 / -1">
+          <h3>Pending Requests</h3>
+          <button
+            class="btn"
+            onclick="fetchLibrarianRequests()"
+            style="margin-bottom: 10px"
+          >
+            Refresh Requests
+          </button>
+          <div style="overflow-x: auto">
+            <table id="librarian-req-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>User</th>
+                  <th>Book</th>
+                  <th>Type</th>
+                  <th>Time</th>
+                  <th>Fine(₹)</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="glass-panel card" style="grid-column: 1 / -1">
+          <h3>📚 All Books</h3>
+          <button
+            class="btn"
+            onclick="fetchBooks()"
+            style="margin-bottom: 10px"
+          >
+            Refresh Books
+          </button>
+
+          <div style="overflow-x: auto">
+            <table id="books-table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Available</th>
+                  <th>Total</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STUDENT/FACULTY DASHBOARD -->
+    <div id="student-view" class="view-container">
+      <div class="dashboard-header">
+        <h2>My Dashboard</h2>
+        <button class="btn btn-danger" onclick="logout()">Logout</button>
+      </div>
+      <div class="dashboard-grid">
+        <div class="glass-panel card">
+          <h3>Search Books</h3>
+          <div
+            class="input-group"
+            style="flex-direction: row; gap: 10px; margin-bottom: 10px"
+          >
+            <input
+              type="text"
+              id="search-query"
+              placeholder="Title, author, keywords..."
+              style="flex: 1"
+            />
+            <button class="btn" onclick="searchBooks()">Search</button>
+          </div>
+          <div style="overflow-x: auto">
+            <table id="search-results-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Author</th>
+                  <th>Avail</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="glass-panel card">
+          <h3>My Issued Books</h3>
+          <button
+            class="btn"
+            onclick="fetchMyIssued()"
+            style="margin-bottom: 10px"
+          >
+            Refresh
+          </button>
+          <div style="overflow-x: auto">
+            <table id="my-issued-table">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Due Date</th>
+                  <th>Fine</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+  </body>
+</html>
