@@ -176,24 +176,39 @@ def handle_request(req_id, action): # action = 'approved' or 'rejected'
                     action = 'rejected' # Auto reject if no copies
                     
             elif req.type == 'return':
-                # cursor.execute("UPDATE books SET available_copies = available_copies + 1 WHERE id = %s", (req.book_id,))
-                # cursor.execute("DELETE FROM issued_books WHERE user_id = %s AND book_id = %s", (req.user_id, req.book_id))
-                 cursor.execute("""SELECT * FROM issued_books WHERE user_id=%s AND book_id=%s AND returned=0 """, (req.user_id, req.book_id))
-                 issued = cursor.fetchone()
-                 if issued:
-                    due_date = issued['due_date']
-                    today = datetime.now().date()
-                    fine = 0
-                    if today > due_date:
-                        days_late = (today - due_date).days
-                        fine = days_late * FINE_PER_DAY
+                cursor.execute("SELECT * FROM issued_books WHERE user_id = %s AND book_id = %s AND returned = 0 ORDER by  id DESC LIMIT 1 ",
+                               (req.user_id, req.book_id))
+                issued = cursor.fetchone()
+                if not issued:
+                    print("No issued record found!")
+                    return False   # or handle gracefully
+                if issued['returned'] == 1:
+                    print("Book already returned!")
+                    return False   # or handle gracefully
 
-                    cursor.execute("UPDATE issued_books SET returned=1, fine=%s WHERE id=%s ", (fine, issued['id']))
-                    cursor.execute("UPDATE books SET available_copies = available_copies + 1 WHERE id=%s ", (req.book_id,))
+                due_date = issued['due_date']
+                today = datetime.now().date()
+                fine = 0
+                if today > due_date:
+                    days_late = (today - due_date).days
+                    fine = days_late * FINE_PER_DAY
+
+                cursor.execute(
+                    "UPDATE issued_books SET returned=1, fine=%s WHERE id=%s",
+                    (fine, issued['id'])
+                )
+
+                cursor.execute(
+                    "UPDATE books SET available_copies = available_copies + 1 WHERE id=%s",
+                    (req.book_id,)
+                )
+
             elif req.type == 'renew':
                 new_due = datetime.now() + timedelta(days=14)
-                cursor.execute("UPDATE issued_books SET due_date = %s WHERE user_id = %s AND book_id = %s",
-                               (new_due, req.user_id, req.book_id))
+                cursor.execute(
+                    "UPDATE issued_books SET due_date = %s WHERE user_id = %s AND book_id = %s",
+                    (new_due, req.user_id, req.book_id)
+                )
                                
         cursor.execute("UPDATE requests SET status = %s WHERE id = %s", (action, req_id))
         conn.commit()
