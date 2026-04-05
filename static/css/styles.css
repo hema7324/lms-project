@@ -21,19 +21,6 @@
     padding: 0;
 }
 
-/* body {
-    font-family: var(--font);
-    background: var(--bg-color);
-    background-image: radial-gradient(circle at top right, rgba(88,166,255,0.1), transparent 400px),
-                      radial-gradient(circle at bottom left, rgba(35,134,54,0.1), transparent 400px);
-    background-attachment: fixed;
-    color: var(--text-primary);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 2rem;
-} */
  body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
@@ -90,13 +77,6 @@ header h1 {
 }
 
 .glass-panel {
-    /* background: var(--panel-bg);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    padding: 2rem;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3); */
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
     border-radius: 15px;
@@ -141,21 +121,7 @@ input:focus, select:focus {
     box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.2);
 }
 
-/* .btn {
-    padding: 0.8rem 1.5rem;
-    border: none;
-    border-radius: 6px;
-    font-family: var(--font);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    background: var(--accent);
-    color: #fff;
-} 
-.btn:hover {
-    background: var(--accent-hover);
-    transform: translateY(-2px);
-}*/
+
  .btn {
     background: linear-gradient(45deg, #4facfe, #00f2fe);
     border: none;
@@ -184,7 +150,7 @@ input:focus, select:focus {
     margin-top: 1rem;
 }
 
-/* Dashboard Styles */
+
 .dashboard-header {
     display: flex;
     justify-content: space-between;
@@ -219,18 +185,6 @@ input:focus, select:focus {
     color: var(--accent);
 }
 
-/* Tables */
-/* table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 1rem;
-}
-
-th, td {
-    padding: 0.75rem;
-    text-align: left;
-    border-bottom: 1px solid var(--border-color);
-}*/
 table {
     width: 100%;
     border-collapse: collapse;
@@ -245,10 +199,7 @@ th, td {
 tr:hover {
     background: rgba(255,255,255,0.1);
 }
-/* th {
-    color: var(--text-secondary);
-    font-weight: 600;
-}  */
+
 
 .hidden {
     display: none;

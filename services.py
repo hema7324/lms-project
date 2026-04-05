@@ -186,7 +186,7 @@ def handle_request(req_id, action): # action = 'approved' or 'rejected'
                     print("Book already returned!")
                     return False   # or handle gracefully
 
-                due_date = issued['due_date']
+                due_date = issued['due_date'].date()
                 today = datetime.now().date()
                 fine = 0
                 if today > due_date:

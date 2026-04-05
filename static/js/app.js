@@ -231,7 +231,6 @@ async function fetchMyIssued() {
     try {
         const issued = await apiCall('/issued', 'GET');
         const tbody = document.querySelector('#my-issued-table tbody');
-        const totalFineElement = document.getElementById('total-fine');
         let totalFine = 0;
         tbody.innerHTML = '';
         issued.forEach(ib => {
@@ -258,7 +257,11 @@ async function fetchMyIssued() {
             `;
             tbody.appendChild(tr);
         });
-        document.getElementById('total-fine').innerText = "Total Fine: ₹" + totalFine;
+        const totalFineElement = document.getElementById('total-fine');
+
+        if (totalFineElement) {
+            totalFineElement.innerText = "Total Fine: ₹" + totalFine;
+        }
     } catch (err) { alert(err.message); }
 }
 
